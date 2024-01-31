@@ -38,7 +38,6 @@
                     <input type="text" class="form-control shadow-none" placeholder="Enter here..." required id="lname">
                 </div>
 
-
                 <div class="col-md-4 d-grid p-1">
                     <button type="submit" id="submit" class="btn btn-secondary shadow-none mt-4"><i class="bi bi-plus-lg"></i> Submit</button>
                 </div>
@@ -57,7 +56,6 @@
                         <th scope="col">Full Name</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
-
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -75,7 +73,6 @@
 
 <!-- jquery include -->
 <script src="./jquery/jquery.js"></script>
-
 
 
 <script>
@@ -128,8 +125,31 @@
 
             }
 
-
         }) //onclick function
+
+        $(document).on("click", ".delete-btn", function() {
+            if(confirm("Do you Really want to Delete this Row?")){
+                var id = $(this).data("id");
+            var del = this;
+            $.ajax({
+                url: "delete.php",
+                type: "POST",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    if (data == 1) {
+                        $(del).closest("tr").fadeOut();
+                    }
+                    else{
+                        alert("Sorry! Data is not Deleted...")
+                    }
+                }
+            }) //ajax
+
+            }
+       
+        })
 
     }) //document.ready
 </script>
