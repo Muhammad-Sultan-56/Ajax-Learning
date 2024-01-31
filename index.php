@@ -14,7 +14,7 @@
 <body>
     <div class="container my-4">
 
-    <div id="messages"></div>
+        <div id="messages"></div>
 
         <div class="bg-secondary mx-2 text-center p-2 text-white d-flex justify-content-between">
             <h2>PHP & AJAX CRUD</h2>
@@ -54,35 +54,14 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
+                        <th scope="col">Full Name</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
 
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td><button class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</button></td>
-                        <td><button class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Delete</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td><button class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</button></td>
-                        <td><button class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Delete</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td><button class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</button></td>
-                        <td><button class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Delete</button></td>
-                    </tr>
+                <tbody id="tbody">
+
                 </tbody>
             </table>
         </div>
@@ -97,41 +76,60 @@
 <!-- jquery include -->
 <script src="./jquery/jquery.js"></script>
 
+
+
 <script>
     $(document).ready(function() {
 
-        $("#submit").on("click", function(e){
+        // Select Data Ajax Function of Jquery
+        function showData() {
+            $.ajax({
+                url: "select.php",
+                type: "POST",
+                success: function(data) {
+                    $("#tbody").html(data);
+                }
+            }) //ajax
+        }
+        showData();
+
+
+
+        $("#submit").on("click", function(e) {
 
             e.preventDefault();
             var fname = $("#fname").val();
             var lname = $("#lname").val();
 
-            if(fname == "" || lname == ""){
+            if (fname == "" || lname == "") {
                 alert("All Fields are required...");
-            }
-            
-            else{
+            } else {
+                // Insert Data Ajax Function of Jquery
                 $.ajax({
-                url: "insert.php",
-                type: "POST",
-                data: {
-                    first_name: fname,
-                    last_name: lname
-                },
-                success: function(data) {
-                    if (data == 1) {
-                        alert('Congratulation! Data Inserted Successfully...');
-                        $("#addRecord").trigger("reset");
-                    } else {
-                        alert('Sorry! Data is not Inserted...');
+                    url: "insert.php",
+                    type: "POST",
+                    data: {
+                        first_name: fname,
+                        last_name: lname
+                    },
+                    success: function(data) {
+                        //select function call on submit
+                        showData();
 
+                        if (data == 1) {
+                            alert('Congratulation! Data Inserted Successfully...');
+                            $("#addRecord").trigger("reset");
+                        } else {
+                            alert('Sorry! Data is not Inserted...');
+                        }
                     }
-                }
-            })
+                }) //ajax
+
 
             }
 
 
-        })
-    })
+        }) //onclick function
+
+    }) //document.ready
 </script>
