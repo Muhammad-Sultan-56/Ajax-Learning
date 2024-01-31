@@ -3,6 +3,8 @@
 
 <head>
     <title>Ajax CRUD</title>
+    <!-- custom style -->
+    <link rel="stylesheet" href="./Bootstrap/css/style.css">
     <!-- Bootstrap Links -->
     <link rel="stylesheet" href="./Bootstrap/css/bootstrap.min.css">
     <script src="./Bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -63,8 +65,25 @@
                 </tbody>
             </table>
         </div>
-
         <!-- table end -->
+
+        <!-- modal start -->
+
+        <!-- Modal -->
+        <div id="modal">
+            <div id="modal-form">
+                <div class="modal-data">
+
+                </div>
+
+                <!--close btn -->
+                <div id="close-btn"><i class="bi bi-x-lg fs-5 fw-bold"></i></div>
+
+            </div><!--modal form -->
+        </div><!--modal -->
+
+        <!-- modal end -->
+
     </div><!--container-->
 
 </body>
@@ -127,28 +146,84 @@
 
         }) //onclick function
 
+
         $(document).on("click", ".delete-btn", function() {
-            if(confirm("Do you Really want to Delete this Row?")){
+            if (confirm("Do you Really want to Delete this Row?")) {
                 var id = $(this).data("id");
-            var del = this;
+                var del = this;
+                $.ajax({
+                    url: "delete.php",
+                    type: "POST",
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
+                        if (data == 1) {
+                            $(del).closest("tr").fadeOut();
+                        } else {
+                            alert("Sorry! Data is not Deleted...")
+                        }
+                    }
+                }) //ajax
+
+            }
+        })
+
+
+        $(document).on("click", ".edit-btn", function() {
+
+            // show modal form on click
+            $("#modal").show();
+
+            var getid = $(this).data("edit");
+
             $.ajax({
-                url: "delete.php",
+                url: "edit.php",
                 type: "POST",
                 data: {
-                    id: id
+                    id: getid
+                },
+                success: function(data) {
+                    $(".modal-data").html(data);
+                }
+            }) //ajax
+        })
+
+
+        // hide form on click
+        $("#close-btn").on("click", function() {
+            $("#modal").hide();
+        })
+
+
+
+
+        $(document).on("click", "#save", function() {
+
+            var id = $("#edit-id").val();
+            var fname = $("#edit-fname").val();
+            var lname = $("#edit-lname").val();
+
+            $.ajax({
+                url: "update.php",
+                type: "POST",
+                data: {
+                    editId: id,
+                    editFname: fname,
+                    editLname: lname
                 },
                 success: function(data) {
                     if (data == 1) {
-                        $(del).closest("tr").fadeOut();
+                        $("#modal").hide();
+                        showData();
                     }
                     else{
-                        alert("Sorry! Data is not Deleted...")
+                        alert("Failed")
                     }
                 }
             }) //ajax
+                        
 
-            }
-       
         })
 
     }) //document.ready
