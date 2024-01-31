@@ -16,15 +16,10 @@
 <body>
     <div class="container my-4">
 
-        <div id="messages"></div>
-
-        <div class="bg-secondary mx-2 text-center p-2 text-white d-flex justify-content-between">
+        <div class="bg-secondary mx-2 text-center p-3 text-white d-flex justify-content-between align-items-center">
             <h2>PHP & AJAX CRUD</h2>
-
-            <div class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search here...">
-                <button class="btn btn-outline-light  shadow-none" type="submit"><i class="bi bi-search"></i></button>
-            </div>
+            <!-- live search -->
+            <div><input class="form-control shadow-none" type="search" id="search" autocomplete="off" placeholder="Search here..."></div>
         </div>
 
         <!-- form start-->
@@ -69,20 +64,15 @@
 
         <!-- modal start -->
 
-        <!-- Modal -->
         <div id="modal">
             <div id="modal-form">
-                <div class="modal-data">
-
-                </div>
+                <div class="modal-data"> </div>
 
                 <!--close btn -->
                 <div id="close-btn"><i class="bi bi-x-lg fs-5 fw-bold"></i></div>
 
             </div><!--modal form -->
         </div><!--modal -->
-
-        <!-- modal end -->
 
     </div><!--container-->
 
@@ -110,6 +100,7 @@
         showData();
 
 
+        // Insert Data Ajax Function of Jquery on submit button click
 
         $("#submit").on("click", function(e) {
 
@@ -120,7 +111,6 @@
             if (fname == "" || lname == "") {
                 alert("All Fields are required...");
             } else {
-                // Insert Data Ajax Function of Jquery
                 $.ajax({
                     url: "insert.php",
                     type: "POST",
@@ -147,6 +137,9 @@
         }) //onclick function
 
 
+
+        // Delete Ajax Function of jquery on delete button click
+
         $(document).on("click", ".delete-btn", function() {
             if (confirm("Do you Really want to Delete this Row?")) {
                 var id = $(this).data("id");
@@ -169,6 +162,8 @@
             }
         })
 
+
+        // Edit Modal form open on edit button click 
 
         $(document).on("click", ".edit-btn", function() {
 
@@ -197,6 +192,7 @@
 
 
 
+        // Updaet ajax function of jquery  on save button click
 
         $(document).on("click", "#save", function() {
 
@@ -216,15 +212,27 @@
                     if (data == 1) {
                         $("#modal").hide();
                         showData();
-                    }
-                    else{
-                        alert("Failed")
-                    }
+                    } 
                 }
             }) //ajax
-                        
 
         })
+
+
+        //live search ajax function 
+        $("#search").on("keyup" , function(){
+
+            var search = $(this).val(); 
+            $.ajax({
+                url: "live-search.php",
+                type: "POST",
+                data : {search : search},
+                success : function(data){
+                    $("#tbody").html(data);
+                }
+            })
+        })
+        
 
     }) //document.ready
 </script>
