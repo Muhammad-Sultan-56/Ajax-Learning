@@ -45,22 +45,11 @@
 
 
         <!-- table start -->
-        <div class="p-2">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Full Name</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col">Delete</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody">
+        <div class="p-2" id="tbody">
 
-                </tbody>
-            </table>
         </div>
         <!-- table end -->
+
 
         <!-- modal start -->
 
@@ -88,16 +77,35 @@
     $(document).ready(function() {
 
         // Select Data Ajax Function of Jquery
-        function showData() {
+        function showData(page) {
             $.ajax({
                 url: "select.php",
                 type: "POST",
+                data: {
+                    page_no: page
+                },
                 success: function(data) {
                     $("#tbody").html(data);
                 }
             }) //ajax
         }
         showData();
+
+
+
+
+        // Pagination code using jquery ajax
+
+        $(document).on("click", "#pagination a", function(e) {
+
+            e.preventDefault();
+            var page_id = $(this).attr("id");
+
+            showData(page_id);
+        })
+
+
+
 
 
         // Insert Data Ajax Function of Jquery on submit button click
@@ -131,10 +139,12 @@
                     }
                 }) //ajax
 
-
             }
 
         }) //onclick function
+
+
+
 
 
 
@@ -163,6 +173,9 @@
         })
 
 
+
+
+
         // Edit Modal form open on edit button click 
 
         $(document).on("click", ".edit-btn", function() {
@@ -185,10 +198,15 @@
         })
 
 
+
         // hide form on click
         $("#close-btn").on("click", function() {
             $("#modal").hide();
         })
+
+
+
+
 
 
 
@@ -212,27 +230,33 @@
                     if (data == 1) {
                         $("#modal").hide();
                         showData();
-                    } 
+                    }
                 }
             }) //ajax
 
         })
 
 
-        //live search ajax function 
-        $("#search").on("keyup" , function(){
 
-            var search = $(this).val(); 
+
+
+        //live search ajax function 
+        $("#search").on("keyup", function() {
+
+            var search = $(this).val();
             $.ajax({
                 url: "live-search.php",
                 type: "POST",
-                data : {search : search},
-                success : function(data){
+                data: {
+                    search: search
+                },
+                success: function(data) {
                     $("#tbody").html(data);
                 }
             })
         })
-        
+
+
 
     }) //document.ready
 </script>
