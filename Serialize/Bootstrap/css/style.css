@@ -1,0 +1,32 @@
+#modal{
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    display: none;
+}
+#modal-form{
+    background-color: #fff;
+    width: 35%;
+    position: relative;
+    top: 20%;
+    left: calc(50%-15%);
+    padding: 20px;
+    border-radius: 5px;
+    margin: auto;
+}
+#close-btn{
+    padding: 8px;
+    position: absolute;
+    top: 0px;
+    z-index: 110;
+    right: 0;
+}
+#close-btn:hover{
+    border-top-right-radius: 5px;
+    background-color: rgb(192, 1, 1);
+    color: white;
+}
