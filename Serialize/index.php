@@ -62,6 +62,7 @@
 
             </div> <!-- row end-->
         </form>
+        <div id='res'></div>
         <!-- form end-->
 </body>
 
@@ -71,27 +72,27 @@
 
 <script>
     $(document).ready(function() {
-        $("#submit").on("click", function() {
-
+        $("#submit").on("click", function(e) {
+            e.preventDefault();
 
             var name = $("#name").val();
             var age = $("#age").val();
             var country = $("#country").val();
             var gender = $("#gender").val();
 
-
             if (name == "" || age == "" || !$("input:radio[name=gender]").is(":checked")) {
                 alert("All fields are Required")
             }
             else{
-                $.ajax({
-                    url : "insert.php",
-                    type : "POST",
-                    data : ("#addRecord").serialize(),
-                    success : function(data){
+
+                $.post(
+                    "insert.php",
+                    $("#addRecord").serialize(),
+                    function(data){
                         alert(data);
+                        $("#addRecord")[0].reset();
                     }
-                })
+                )
             }
 
         }) // on click function
