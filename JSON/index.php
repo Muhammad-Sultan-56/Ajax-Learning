@@ -21,7 +21,24 @@
         </div>
 
 
-        <div id='res' class="bg-white shadow p-3 mx-2"></div>
+        <!-- <div id='res' class="bg-white shadow p-3 mx-2"></div> -->
+        <div class="p-3 mx-2">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Gender</th>
+
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+        </div>
 
     </div>
 </body>
@@ -33,14 +50,28 @@
 <script>
     $(document).ready(function() {
 
+        // $.ajax({
+        //     url: "./json/json-data.json",
+        //     type: "POST",
+        //     dataType : "JSON",
+        //     success: function(data) {
+        //         $.each(data, function(index, item) {
+        //             $('#res').append('<p>' + item.id + ' ' + item.title + '</p>');
+        //         });
+        //     }
+        // })
+
+
         $.ajax({
-            url: "./json/json-data.json",
+            url: "fetch-json.php",
             type: "POST",
-            dataType : "JSON",
+            dataType: "JSON",
             success: function(data) {
-                $.each(data, function(index, item) {
-                    $('#res').append('<p>' + item.id + ' ' + item.title + '</p>');
-                });
+                // console.log(data);
+                $.each(data, function(key, value) {
+
+                    $("#tbody").append("<tr> <td>" + value.id + "</td> <td>" + value.name + "</td> <td>" + value.age + " </td> <td>" + value.country + "</td> <td>" + value.gender + "</td> </tr>")
+                })
             }
         })
 
