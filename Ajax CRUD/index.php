@@ -3,14 +3,15 @@
 
 <head>
     <title>Ajax CRUD</title>
-    <!-- custom style -->
-    <link rel="stylesheet" href="./Bootstrap/css/style.css">
+
     <!-- Bootstrap Links -->
     <link rel="stylesheet" href="./Bootstrap/css/bootstrap.min.css">
-    <script src="./Bootstrap/js/bootstrap.bundle.min.js"></script>
+
 
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="./Bootstrap/icons/font/bootstrap-icons.css">
+    <!-- custom style -->
+    <link rel="stylesheet" href="./Bootstrap/css/style.css">
 </head>
 
 <body>
@@ -69,6 +70,7 @@
 
 </html>
 
+<script src="./Bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- jquery include -->
 <script src="./jquery/jquery.js"></script>
 
@@ -92,8 +94,6 @@
         showData();
 
 
-
-
         // Pagination code using jquery ajax
 
         $(document).on("click", "#pagination a", function(e) {
@@ -103,9 +103,6 @@
 
             showData(page_id);
         })
-
-
-
 
 
         // Insert Data Ajax Function of Jquery on submit button click
@@ -145,9 +142,6 @@
 
 
 
-
-
-
         // Delete Ajax Function of jquery on delete button click
 
         $(document).on("click", ".delete-btn", function() {
@@ -174,8 +168,6 @@
 
 
 
-
-
         // Edit Modal form open on edit button click 
 
         $(document).on("click", ".edit-btn", function() {
@@ -198,15 +190,10 @@
         })
 
 
-
         // hide form on click
         $("#close-btn").on("click", function() {
             $("#modal").hide();
         })
-
-
-
-
 
 
 
@@ -237,9 +224,6 @@
         })
 
 
-
-
-
         //live search ajax function 
         $("#search").on("keyup", function() {
 
@@ -255,7 +239,6 @@
                 }
             })
         })
-
 
 
     }) //document.ready
